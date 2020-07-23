@@ -1,8 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get_weather/services/location.dart';
-import 'package:http/http.dart' as http;
+import 'package:get_weather/services/networking.dart';
+
+const apiKey = 'd7d722850a712f1df1d0566396929b91';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -14,30 +14,20 @@ class _LoadingScreenState extends State<LoadingScreen> {
   double longitude;
   double latitude;
 
-  void getLocation() async {
+  void getLocationData() async {
     await location.getCurrentLocation();
     longitude = location.longitude;
     latitude = location.latitude;
-  }
 
-  void getData() async {
-    http.Response response = await http.get(
-        'https://samples.openweathermap.org/data/2.5/weather?lat=latitude&lon=longitude&appid=439d4b804bc8187953eb36d2a8c26a02');
-    if (response.statusCode == 200) {
-      String data = response.body;
-      var decode = jsonDecode(data);
-      double temp = decode['main']['temp'];
-      int condition = decode['weather'][0]['id'];
-      String cityName = decode['name'];
-    } else {
-      print(response.statusCode);
-    }
+    NetworkHelper networkHelper = NetworkHelper(
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
+    var weatherData = await networkHelper.getData();
   }
 
   @override
   void initState() {
     super.initState();
-    getLocation();
+    getLocationData();
   }
 
   @override
