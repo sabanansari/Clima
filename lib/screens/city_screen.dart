@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_weather/utilities/constants.dart';
+import 'package:get_weather/utilities/constants.dart';
 
 class CityScreen extends StatefulWidget {
   @override
@@ -24,7 +25,9 @@ class _CityScreenState extends State<CityScreen> {
               Align(
                 alignment: Alignment.topLeft,
                 child: FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: Icon(
                     Icons.arrow_back_ios,
                     size: 50.0,
@@ -33,7 +36,12 @@ class _CityScreenState extends State<CityScreen> {
               ),
               Container(
                 padding: EdgeInsets.all(20.0),
-                child: null,
+                child: TextField(
+                  style: TextStyle(
+                    color: Colors.black87,
+                  ),
+                  decoration: kInputDecoration,
+                ),
               ),
               FlatButton(
                 onPressed: () {},
